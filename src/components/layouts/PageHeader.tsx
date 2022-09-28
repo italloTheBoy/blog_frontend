@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 export function PageHeader() {
@@ -9,8 +8,9 @@ export function PageHeader() {
           <header>
             <Navbar.Brand href="/">Blog.ex</Navbar.Brand>
           </header>
+
           <Navbar.Toggle aria-controls="nav-menu" />
-          <Navbar.Collapse as="main" id="nav-menu" className="justify-content-end">
+          <Navbar.Collapse id="nav-menu" className="justify-content-end">
             <Nav as="ul">
               <Nav.Item as="li" key="login">
                 <Nav.Link href="/login">Entrar</Nav.Link>
