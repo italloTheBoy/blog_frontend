@@ -1,22 +1,27 @@
-import styles from './PageHeader.module.css'
-import { Link } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 export function PageHeader() {
   return (
-    <nav className={styles.nav}>
-      <header className={styles.navHeader}>
-        <Link to="/">Blog.ex</Link>
-      </header>
-
-      <ul className={styles.navList}>
-        <li>
-          <Link to="/login">Entrar</Link>
-        </li>
-
-        <li>
-          <Link to="/register">Cadastrar-se</Link>
-        </li>
-      </ul>
-    </nav>
+    <header>
+      <Navbar bg="primary" variant="dark" expand="lg">
+        <Container>
+          <header>
+            <Navbar.Brand href="/">Blog.ex</Navbar.Brand>
+          </header>
+          <Navbar.Toggle aria-controls="nav-menu" />
+          <Navbar.Collapse as="main" id="nav-menu" className="justify-content-end">
+            <Nav as="ul">
+              <Nav.Item as="li" key="login">
+                <Nav.Link href="/login">Entrar</Nav.Link>
+              </Nav.Item>
+              <Nav.Item as="li" key="register">
+                <Nav.Link href="/register">Cadastrar-se</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
   )
 }
