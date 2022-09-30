@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
+import { redirect } from 'react-router-dom';
 import { AuthProviderParams, ContextData, LoginData, RegisterData } from '../types/contexts/authTypes';
 import { api } from '../utils/api'
 
@@ -36,6 +37,8 @@ export function AuthProvider({ children }: AuthProviderParams) {
 
     localStorage.removeItem('@App:user')
     localStorage.removeItem('@App:token')
+
+    redirect('/')
   }
 
   return (
