@@ -28,8 +28,10 @@ export function AuthProvider({ children }: AuthProviderParams) {
   const login = async (data: LoginData): Promise<void> => {
     const res = await api.post("/login", data)
     
-    localStorage.setItem('@App:user', JSON.stringify(res.data.user));
-    localStorage.setItem('@App:token', res.data.token);
+    localStorage.setItem('@App:user', JSON.stringify(res.data.user))
+    localStorage.setItem('@App:token', res.data.token)
+
+    redirect('/')
   }
 
   const logout = async (): Promise<void> => {
