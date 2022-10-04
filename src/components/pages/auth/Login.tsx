@@ -1,19 +1,36 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useAuth } from "../../../hooks/useAuth"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from "yup"
 
-type LoginInputs = {
-  email: string,
-  password: string,
-}
+const loginSchema = yup.object({
+  email: yup
+    .string()
+    .required("email requerido")
+    .trim("email invalido")
+    .email("email invalido")
+    .max(160, "email muito longo"),
+  password: yup
+    .string()
+    .required("senha requerida")
+    .trim("senha invalida")
+    .min(6, "senha muito longa")
+    .max(20, "senha muito longa")
+})
+
+type TLoginInputs = yup.InferType<typeof loginSchema>
 
 export function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginInputs>()
+  const { register, handleSubmit, formState: { errors } } = useForm<TLoginInputs>({
+    resolver: yupResolver(loginSchema), 
+  })
+
   const { login } = useAuth()
 
-  const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+  const onSubmit: SubmitHandler<TLoginInputs> = (data) => {
     console.log(data)
     
-    login(data)
+    // login(data)
   }
 
   return (
@@ -21,15 +38,9 @@ export function Login() {
       <label htmlFor="email">Email</label>
       <input 
         id="email" 
-        placeholder="Email" 
         type="email"
-        {...register("email", { 
-          required: "Insira um email",
-          pattern: {
-            value: /^[^\s]+@[^\s]+$/,
-            message: "Insira um email valido"
-          }
-        })} 
+        placeholder="Email" 
+        {...register("email")} 
       />
       {errors.email && <span>{errors.email.message}</span>}
 
@@ -38,19 +49,9 @@ export function Login() {
       <label htmlFor="password">Password</label>
       <input 
         id="password" 
-        placeholder="Password" 
         type="password"
-        {...register("password", { 
-          required: "Insira uma senha",
-          minLength: {
-            value: 6,
-            message: "Senha muito curta"
-          },
-          maxLength: {
-            value: 20,
-            message: "Senha muito longa"
-          },
-        })}
+        placeholder="Password" 
+        {...register("password")}
       />
       {errors.password && <span>{errors.password.message}</span>}
 
