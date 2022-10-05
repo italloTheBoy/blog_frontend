@@ -1,63 +1,97 @@
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { useAuth } from "../../../hooks/useAuth"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
+import { Button, Form } from "react-bootstrap"
 
 const loginSchema = yup.object({
   email: yup
     .string()
-    .required("email requerido")
-    .trim("email invalido")
-    .email("email invalido")
-    .max(160, "email muito longo"),
+    .required("Email requerido")
+    .trim("Email invalido")
+    .email("Email invalido")
+    .max(160, "Email muito longo"),
   password: yup
     .string()
-    .required("senha requerida")
-    .trim("senha invalida")
-    .min(6, "senha muito longa")
-    .max(20, "senha muito longa")
+    .required("Senha requerida")
+    .trim("Senha invalida")
+    .min(6, "Senha muito longa")
+    .max(20, "Senha muito longa")
 })
 
 type TLoginInputs = yup.InferType<typeof loginSchema>
 
 export function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm<TLoginInputs>({
-    resolver: yupResolver(loginSchema), 
+  const { control, handleSubmit, formState: { errors } } = useForm<TLoginInputs>({
+    resolver: yupResolver(loginSchema),
   })
 
   const { login } = useAuth()
 
   const onSubmit: SubmitHandler<TLoginInputs> = (data) => {
     console.log(data)
-    
+
+
     // login(data)
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="email">Email</label>
-      <input 
-        id="email" 
-        type="email"
-        placeholder="Email" 
-        {...register("email")} 
-      />
-      {errors.email && <span>{errors.email.message}</span>}
+    <Form className="d-grid gap-3 w-50 m-auto" onSubmit={handleSubmit(onSubmit)}>
+      <Form.Group className="mt-3" as="section">
+        <Form.Label htmlFor="email">Email</Form.Label>
 
-    <br />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Form.Control
+              id="email"
+              aria-describedby={errors.email ? "emailErrors" : undefined}
+              type="email"
+              placeholder="Insira um email"
+              maxLength={160}
+              required={true}
+              autoFocus={true}
+              {...field}
+            />
+          )}
+        />
 
-      <label htmlFor="password">Password</label>
-      <input 
-        id="password" 
-        type="password"
-        placeholder="Password" 
-        {...register("password")}
-      />
-      {errors.password && <span>{errors.password.message}</span>}
+        {errors.email && (
+          <Form.Text id="emailErrors" className="text-danger">
+            {errors.email.message}
+          </Form.Text>
+        )}
+      </Form.Group>
 
-      <br />
+      <Form.Group as="section">
+        <Form.Label htmlFor="password">Password</Form.Label>
 
-      <button type="submit">Entrar</button>
-    </form>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <Form.Control
+              id="password"
+              aria-describedby={errors.password ? "passwordErrors" : undefined}
+              type="password"
+              placeholder="Insira uma senha"
+              minLength={6}
+              maxLength={20}
+              required={true}
+              {...field}
+            />
+          )}
+        />
+
+        {errors.password && (
+          <Form.Text id="passwordErrors" className="text-danger">
+            {errors.password.message}
+          </Form.Text>
+        )}
+      </Form.Group>
+
+      <Button className="mt-1 p-2" type="submit">Entrar</Button>
+    </Form>
   )
 } 
