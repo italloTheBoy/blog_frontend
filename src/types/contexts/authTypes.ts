@@ -1,8 +1,12 @@
 import { ReactNode } from "react"
+import { InferType } from "yup"
+import { loginSchema } from "../../schemas/loginSchema"
 
 export interface AuthProviderParams {
   children: ReactNode
 }
+
+export type TLoginData = InferType<typeof loginSchema>
 
 export interface RegisterData {
   username: string
@@ -11,15 +15,11 @@ export interface RegisterData {
 	password_confirmation: string,
 }
 
-export interface LoginData {
-  email: string,
-	password: string,
-}
 
 export interface ContextData {
   authenticated: boolean,
   user: object | null
   register(data: RegisterData): Promise<void>,
-  login(data: LoginData): Promise<void>,
+  login(data: TLoginData): Promise<void>,
   logout(): Promise<void>,
 }

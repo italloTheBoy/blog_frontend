@@ -1,34 +1,18 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { useAuth } from "../../../hooks/useAuth"
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
 import { Button, Form } from "react-bootstrap"
-
-const loginSchema = yup.object({
-  email: yup
-    .string()
-    .required("Email requerido")
-    .trim("Email invalido")
-    .email("Email invalido")
-    .max(160, "Email muito longo"),
-  password: yup
-    .string()
-    .required("Senha requerida")
-    .trim("Senha invalida")
-    .min(6, "Senha muito longa")
-    .max(20, "Senha muito longa")
-})
-
-type TLoginInputs = yup.InferType<typeof loginSchema>
+import { loginSchema } from "../../../schemas/loginSchema"
+import { TLoginData } from "../../../types/contexts/authTypes"
 
 export function Login() {
-  const { control, handleSubmit, formState: { errors } } = useForm<TLoginInputs>({
+  const { control, handleSubmit, formState: { errors } } = useForm<TLoginData>({
     resolver: yupResolver(loginSchema),
   })
 
   const { login } = useAuth()
 
-  const onSubmit: SubmitHandler<TLoginInputs> = (data) => {
+  const onSubmit: SubmitHandler<TLoginData> = (data) => {
     console.log(data)
 
 

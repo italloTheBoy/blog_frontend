@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { redirect } from 'react-router-dom';
-import { AuthProviderParams, ContextData, LoginData, RegisterData } from '../types/contexts/authTypes';
+import { AuthProviderParams, ContextData, TLoginData, RegisterData } from '../types/contexts/authTypes';
 import { api } from '../utils/api'
 
 export const AuthContext = createContext<ContextData>({} as ContextData)
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: AuthProviderParams) {
     localStorage.setItem('@App:token', res.data.token);
   }
 
-  const login = async (data: LoginData): Promise<void> => {
+  const login = async (data: TLoginData): Promise<void> => {
     const res = await api.post("/login", data)
     
     localStorage.setItem('@App:user', JSON.stringify(res.data.user))
