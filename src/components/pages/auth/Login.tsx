@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, ChangeEvent, FormEvent } from "react"
 import { Alert } from "react-bootstrap"
 import { IErrors } from "../../../types/errorsTypes"
+import { Link } from "react-router-dom"
 
 export function Login() {
   const { login } = useAuth()
@@ -77,6 +78,12 @@ export function Login() {
       )}
 
       <Button className="mt-1 p-2" type="submit">Entrar</Button>
+
+      <footer className="m-auto">
+        <Link to="/register" className="link-secondary">
+          Ainda não possui uma conta?
+        </Link>
+      </footer>
     </Form>
   )
 } 

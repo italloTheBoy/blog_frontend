@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 import { IRegisterData } from '../../../types/contexts/authTypes'
@@ -135,6 +136,12 @@ export function Register() {
       )}
 
       <Button className="mt-1 p-2" type="submit">Entrar</Button>
+
+      <footer className="m-auto">
+        <Link to="/login" className="link-secondary">
+          Ja possui uma conta?
+        </Link>
+      </footer>
     </Form>
   )
 } 
