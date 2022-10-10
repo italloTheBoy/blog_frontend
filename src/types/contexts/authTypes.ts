@@ -1,25 +1,34 @@
+import { AxiosResponse } from "axios"
 import { ReactNode } from "react"
-import { InferType } from "yup"
-import { loginSchema } from "../../schemas/loginSchema"
+
+export interface IUser {
+  id: number
+  email: string
+  username: string
+  updated_at: string
+  inserted_at: string
+}
 
 export interface AuthProviderParams {
   children: ReactNode
 }
 
-export type TLoginData = InferType<typeof loginSchema>
-
-export interface RegisterData {
-  username: string
-	email: string,
-	password: string,
-	password_confirmation: string,
+export interface ILoginData {
+  email: string
+  password: string
 }
 
+export interface IRegisterData {
+	email: string
+  username: string
+	password: string
+	password_confirmation: string
+}
 
 export interface ContextData {
-  authenticated: boolean,
-  user: object | null
-  register(data: RegisterData): Promise<void>,
-  login(data: TLoginData): Promise<void>,
-  logout(): Promise<void>,
+  authenticated: boolean
+  user: IUser | null
+  register(data: IRegisterData): Promise<void>
+  login(data: ILoginData): Promise<AxiosResponse<any, any>>
+  logout(): Promise<void>
 }

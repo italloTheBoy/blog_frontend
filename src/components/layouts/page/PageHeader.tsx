@@ -3,10 +3,14 @@ import {  } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 
 export function PageHeader() {
-  const { authenticated, logout } = useAuth()
+  const { authenticated, logout, user } = useAuth()
 
   const authNav = (
     <Nav as="ul">
+      <Nav.Item as="li" key="username">
+        <Nav.Link onClick={() => console.log(user)}>{user ? user.username : "Perfil" }</Nav.Link>
+      </Nav.Item>
+
       <Nav.Item as="li" key="logout">
         <Nav.Link onClick={() => logout()}>Sair</Nav.Link>
       </Nav.Item>

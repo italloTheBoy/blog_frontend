@@ -1,12 +1,13 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
-import { redirect } from 'react-router-dom';
-import { AuthProviderParams, ContextData, TLoginData, RegisterData } from '../types/contexts/authTypes';
+import { AxiosResponse } from 'axios'
+import { createContext, useEffect, useState } from 'react'
+import { redirect } from 'react-router-dom'
+import { AuthProviderParams, ContextData, ILoginData, IRegisterData, IUser } from '../types/contexts/authTypes'
 import { api } from '../utils/api'
 
 export const AuthContext = createContext<ContextData>({} as ContextData)
 
 export function AuthProvider({ children }: AuthProviderParams) {
-  const [user, setUser] = useState<object | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
 
   useEffect(() => {
     const storagedUser = localStorage.getItem('@App:user');
@@ -18,20 +19,28 @@ export function AuthProvider({ children }: AuthProviderParams) {
     }
   }, []);
 
-  const register = async (data: RegisterData): Promise<void> => {
+  const register = async (data: IRegisterData): Promise<void> => {
     const res = await api.post("/login", data)
     
     localStorage.setItem('@App:user', JSON.stringify(res.data.user));
     localStorage.setItem('@App:token', res.data.token);
   }
 
-  const login = async (data: TLoginData): Promise<void> => {
-    const res = await api.post("/login", data)
-    
-    localStorage.setItem('@App:user', JSON.stringify(res.data.user))
-    localStorage.setItem('@App:token', res.data.token)
+  const login = async (data: ILoginData) => {
+    try {
+      const res = await api.post('/login', data)
 
-    redirect('/')
+      setUser(res.data.user)
+      api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+      
+      localStorage.setItem('@App:user', JSON.stringify(res.data.user))
+      localStorage.setItem('@App:token', res.data.token)
+
+      return res
+    }
+    catch (err: any) {
+      return err.response as AxiosResponse<any, any>
+    }
   }
 
   const logout = async (): Promise<void> => {

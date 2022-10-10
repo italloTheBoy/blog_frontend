@@ -12,13 +12,11 @@ export function PageLayout() {
   
   const authRoutes = (
     <>
-
     </>
   )
 
   const unAuthRoutes = (
     <>
-      <Route path="" element={<Home />} />
 
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
@@ -31,6 +29,7 @@ export function PageLayout() {
       <Container as="main">
         <Routes>
           <Route path="*" element={<NotFound />} />
+          <Route path="" element={<Home />} />
 
           { authenticated ? authRoutes : unAuthRoutes }
         </Routes>
