@@ -1,16 +1,16 @@
 import { AxiosResponse } from "axios"
 import { ReactNode } from "react"
 
+export interface AuthProviderParams {
+  children: ReactNode
+}
+
 export interface IUser {
   id: number
   email: string
   username: string
   updated_at: string
   inserted_at: string
-}
-
-export interface AuthProviderParams {
-  children: ReactNode
 }
 
 export interface ILoginData {
@@ -28,7 +28,7 @@ export interface IRegisterData {
 export interface ContextData {
   authenticated: boolean
   user: IUser | null
-  register(data: IRegisterData): Promise<void>
+  register(data: IRegisterData): Promise<AxiosResponse<any, any>>
   login(data: ILoginData): Promise<AxiosResponse<any, any>>
   logout(): Promise<void>
 }

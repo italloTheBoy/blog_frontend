@@ -19,22 +19,32 @@ export function AuthProvider({ children }: AuthProviderParams) {
     }
   }, []);
 
-  const register = async (data: IRegisterData): Promise<void> => {
-    const res = await api.post("/login", data)
+  const auth = (res: AxiosResponse<any, any>) => {
+    setUser(res.data.user)
+    api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     
-    localStorage.setItem('@App:user', JSON.stringify(res.data.user));
-    localStorage.setItem('@App:token', res.data.token);
+    localStorage.setItem('@App:user', JSON.stringify(res.data.user))
+    localStorage.setItem('@App:token', res.data.token)
+  }
+
+  const register = async (data: IRegisterData) => {
+    try {
+      const res = await api.post("/users", data)
+
+      auth(res)
+
+      return res
+    }
+    catch(err: any) {
+      return err.response as AxiosResponse<any, any>
+    }
   }
 
   const login = async (data: ILoginData) => {
     try {
       const res = await api.post('/login', data)
 
-      setUser(res.data.user)
-      api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-      
-      localStorage.setItem('@App:user', JSON.stringify(res.data.user))
-      localStorage.setItem('@App:token', res.data.token)
+      auth(res)
 
       return res
     }

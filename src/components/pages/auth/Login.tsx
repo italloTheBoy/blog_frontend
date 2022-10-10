@@ -4,13 +4,14 @@ import { ILoginData } from "../../../types/contexts/authTypes"
 import { useNavigate } from "react-router-dom"
 import { useState, ChangeEvent, FormEvent } from "react"
 import { Alert } from "react-bootstrap"
+import { IErrors } from "../../../types/errorsTypes"
 
 export function Login() {
   const { login } = useAuth()
 
   const navigate = useNavigate()
   
-  const [errs, setErrs] = useState<any>({})
+  const [errs, setErrs] = useState<IErrors>({})
   const [loginData, setLoginData] = useState<ILoginData>({
     email: '',
     password: '',
