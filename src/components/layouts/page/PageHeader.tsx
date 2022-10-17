@@ -8,7 +8,7 @@ export function PageHeader() {
   const authNav = (
     <Nav as="ul">
       <Nav.Item as="li" key="username">
-        <Nav.Link onClick={() => console.log(user)}>{user ? user.username : "Perfil" }</Nav.Link>
+        <Nav.Link href="/user/perfil">{user?.username}</Nav.Link>
       </Nav.Item>
 
       <Nav.Item as="li" key="logout">
@@ -30,7 +30,7 @@ export function PageHeader() {
 
   return (
     <header>
-      <Navbar bg="primary" variant="dark" expand="lg">
+      <Navbar bg="primary" variant="dark" expand="lg" className="mb-3">
         <Container>
           <header>
             <Navbar.Brand href="/">Blog.ex</Navbar.Brand>

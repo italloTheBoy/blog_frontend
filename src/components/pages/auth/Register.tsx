@@ -38,7 +38,12 @@ export function Register() {
 
   return (
     <Form className="d-grid gap-3 w-50 m-auto" onSubmit={handleSubmit}>
-      <Form.Group className="mt-3" as="section">
+      <fieldset>
+        <legend className="m-0 fs-2 text-muted" >Cadastrar-se</legend>
+
+      </fieldset>
+
+      <Form.Group as="section" id="username">
         <Form.Label htmlFor="username">Username</Form.Label>
 
         <Form.Control
@@ -61,7 +66,7 @@ export function Register() {
         )}
       </Form.Group>
 
-      <Form.Group as="section">
+      <Form.Group as="section" id="email">
         <Form.Label htmlFor="email">Email</Form.Label>
 
         <Form.Control
@@ -83,8 +88,8 @@ export function Register() {
           )}
       </Form.Group>
 
-      <Form.Group as="section">
-        <Form.Label htmlFor="password">Password</Form.Label>
+      <Form.Group as="section" id="password">
+        <Form.Label htmlFor="password">Senha</Form.Label>
 
         <Form.Control
           name="password"
@@ -106,7 +111,7 @@ export function Register() {
         )}
       </Form.Group>
 
-      <Form.Group as="section">
+      <Form.Group as="section" id="password_confirmation">
         <Form.Label htmlFor="password_confirmation">Repita sua senha</Form.Label>
 
         <Form.Control

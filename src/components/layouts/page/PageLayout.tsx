@@ -5,6 +5,8 @@ import { Login } from "../../pages/auth/Login";
 import { Register } from "../../pages/auth/Register";
 import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/statusCode/NotFound";
+import { EditUser } from "../../pages/user/EditUser";
+import { Perfil } from "../../pages/user/Perfil";
 import { PageHeader } from "./PageHeader";
 
 export function PageLayout() {
@@ -12,12 +14,15 @@ export function PageLayout() {
   
   const authRoutes = (
     <>
+      <Route path="" element={<Perfil />} />
+      <Route path="user/perfil" element={<Perfil />} />
+      <Route path="user/edit" element={<EditUser />} />
     </>
   )
 
   const unAuthRoutes = (
     <>
-
+      <Route path="" element={<Home />} />
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
     </>
@@ -26,10 +31,9 @@ export function PageLayout() {
   return (
     <BrowserRouter>
       <PageHeader />
-      <Container as="main">
+      <Container>
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="" element={<Home />} />
 
           { authenticated ? authRoutes : unAuthRoutes }
         </Routes>
