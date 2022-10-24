@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 import { IRegisterData } from '../../../types/contexts/authTypes'
-import { IRegisterErrors } from '../../../types/errorsTypes'
+import { IUserFormErrors } from '../../../types/errorsTypes'
 
 export function Register() {
-  const [errs, setErrs] = useState<IRegisterErrors>({})
+  const [errs, setErrs] = useState<IUserFormErrors>({})
 
   const [registerData, setRegisterData] = useState<IRegisterData>({
     username: '',
@@ -40,10 +40,9 @@ export function Register() {
     <Form className="d-grid gap-3 w-50 m-auto" onSubmit={handleSubmit}>
       <fieldset>
         <legend className="m-0 fs-2 text-muted" >Cadastrar-se</legend>
-
       </fieldset>
 
-      <Form.Group as="section" id="username">
+      <Form.Group as="section" id="username-group">
         <Form.Label htmlFor="username">Username</Form.Label>
 
         <Form.Control
@@ -66,7 +65,7 @@ export function Register() {
         )}
       </Form.Group>
 
-      <Form.Group as="section" id="email">
+      <Form.Group as="section" id="email-group">
         <Form.Label htmlFor="email">Email</Form.Label>
 
         <Form.Control
@@ -81,14 +80,14 @@ export function Register() {
           aria-describedby={errs.email ? "emailErrs" : undefined}
         />
 
-          {errs.email && (
-            <Form.Text id="emailErrs" className="text-danger">
-              {errs.email}
-            </Form.Text>
-          )}
+        {errs.email && (
+          <Form.Text id="emailErrs" className="text-danger">
+            {errs.email}
+          </Form.Text>
+        )}
       </Form.Group>
 
-      <Form.Group as="section" id="password">
+      <Form.Group as="section" id="password-group">
         <Form.Label htmlFor="password">Senha</Form.Label>
 
         <Form.Control
@@ -111,7 +110,7 @@ export function Register() {
         )}
       </Form.Group>
 
-      <Form.Group as="section" id="password_confirmation">
+      <Form.Group as="section" id="password_confirmation-group">
         <Form.Label htmlFor="password_confirmation">Repita sua senha</Form.Label>
 
         <Form.Control
@@ -140,7 +139,7 @@ export function Register() {
         </Alert>
       )}
 
-      <Button className="mt-1 p-2" type="submit">Entrar</Button>
+      <Button className="mt-1 p-2" type="submit">Registrar-se</Button>
 
       <footer className="m-auto">
         <Link to="/login" className="link-secondary">

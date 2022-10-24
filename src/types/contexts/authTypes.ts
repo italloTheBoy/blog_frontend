@@ -13,6 +13,8 @@ export interface IUser {
   inserted_at: string
 }
 
+export type TUser = IUser | null
+
 export interface ILoginData {
   email: string
   password: string
@@ -25,10 +27,16 @@ export interface IRegisterData {
 	password_confirmation: string
 }
 
+export interface IUpdateData {
+	email?: string
+  username?: string
+}
+
 export interface ContextData {
   authenticated: boolean
-  user: IUser | null
+  user: TUser
   register(data: IRegisterData): Promise<AxiosResponse<any, any>>
+  update(data: IUpdateData): Promise<AxiosResponse<any, any>>
   login(data: ILoginData): Promise<AxiosResponse<any, any>>
   logout(): Promise<void>
 }

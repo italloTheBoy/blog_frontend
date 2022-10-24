@@ -41,7 +41,7 @@ export function Login() {
       <fieldset className="d-grid gap-3 w-50 m-auto">
         <legend className="m-0 fs-2 text-muted">Entrar</legend>
 
-        <Form.Group as="section" id="email">
+        <Form.Group as="section" id="email-group">
           <Form.Label htmlFor="email">Email</Form.Label>
 
           <Form.Control
@@ -57,7 +57,7 @@ export function Login() {
           />
         </Form.Group>
 
-        <Form.Group as="section" id="password">
+        <Form.Group as="section" id="password-group">
           <Form.Label htmlFor="password">Senha</Form.Label>
 
           <Form.Control

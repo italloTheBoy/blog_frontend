@@ -2,7 +2,7 @@ export interface IErrors {
   global?: string
 }
 
-export interface IRegisterErrors extends IErrors{
+export interface IUserFormErrors extends IErrors{
 	email?: string
   username?: string
 	password?: string

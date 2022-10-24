@@ -5,13 +5,13 @@ import { Login } from "../../pages/auth/Login";
 import { Register } from "../../pages/auth/Register";
 import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/statusCode/NotFound";
-import { EditUser } from "../../pages/user/EditUser";
+import { EditUser } from "../../pages/user/update/EditUser";
 import { Perfil } from "../../pages/user/Perfil";
 import { PageHeader } from "./PageHeader";
 
 export function PageLayout() {
   const { authenticated } = useAuth()
-  
+
   const authRoutes = (
     <>
       <Route path="" element={<Perfil />} />
@@ -35,7 +35,7 @@ export function PageLayout() {
         <Routes>
           <Route path="*" element={<NotFound />} />
 
-          { authenticated ? authRoutes : unAuthRoutes }
+          {authenticated ? authRoutes : unAuthRoutes}
         </Routes>
       </Container>
     </BrowserRouter>

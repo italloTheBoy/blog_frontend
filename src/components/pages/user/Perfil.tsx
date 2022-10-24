@@ -1,11 +1,11 @@
-import { Card, Container, ListGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Card, Container, Navbar, NavDropdown } from 'react-bootstrap'
 import { useAuth } from '../../../hooks/useAuth'
 
 export function Perfil() {
   const { user } = useAuth()
 
   return (
-    <Card border="primary" className="m-auto w-75 p-2">
+    <Card className="m-auto w-75 p-2">
       <Card.Header className="p-0">
         <Navbar>
           <Container>
