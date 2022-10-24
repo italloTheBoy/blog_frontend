@@ -36,7 +36,8 @@ export interface ContextData {
   authenticated: boolean
   user: TUser
   register(data: IRegisterData): Promise<AxiosResponse<any, any>>
-  update(data: IUpdateData): Promise<AxiosResponse<any, any>>
+  updateUser(data: IUpdateData): Promise<AxiosResponse<any, any>>
+  deleteUser(): Promise<AxiosResponse<any, any>>
   login(data: ILoginData): Promise<AxiosResponse<any, any>>
   logout(): Promise<void>
 }

@@ -1,9 +1,10 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import {  } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 
 export function PageHeader() {
   const { authenticated, logout, user } = useAuth()
+  const navigate = useNavigate()
 
   const authNav = (
     <Nav as="ul">
@@ -12,7 +13,7 @@ export function PageHeader() {
       </Nav.Item>
 
       <Nav.Item as="li" key="logout">
-        <Nav.Link onClick={() => logout()}>Sair</Nav.Link>
+        <Nav.Link onClick={() => {logout(); navigate('/');}}>Sair</Nav.Link>
       </Nav.Item>
     </Nav>
   )

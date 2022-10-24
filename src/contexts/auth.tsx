@@ -40,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderParams) {
     }
   }
 
-  const update = async (data: IUpdateData) => {
+  const updateUser = async (data: IUpdateData) => {
     try {
       const res = await api.patch(
         `/users/${user?.id}`,
@@ -51,6 +51,19 @@ export function AuthProvider({ children }: AuthProviderParams) {
 
       setUser(updatedUser)
       localStorage.setItem('@App:user', JSON.stringify(updatedUser))
+
+      return res
+    }
+    catch (err: any) {
+      return await err.response as AxiosResponse<any, any>
+    }
+  }
+
+  const deleteUser = async () => {
+    try {
+      const res = await api.delete(`/users/${user?.id}`)
+
+      logout()
 
       return res
     }
@@ -77,8 +90,6 @@ export function AuthProvider({ children }: AuthProviderParams) {
 
     localStorage.removeItem('@App:user')
     localStorage.removeItem('@App:token')
-
-    redirect('/')
   }
 
   return (
@@ -86,7 +97,8 @@ export function AuthProvider({ children }: AuthProviderParams) {
       authenticated: Boolean(user),
       user,
       register,
-      update,
+      updateUser,
+      deleteUser,
       login,
       logout
     }}>

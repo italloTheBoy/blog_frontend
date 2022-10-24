@@ -1,15 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Button, Form, Container, ListGroup } from "react-bootstrap";
+import { Button, Form, ListGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import { IUpdateData } from "../../../../types/contexts/authTypes";
 import { IUserFormErrors } from "../../../../types/errorsTypes";
 
-export function EditUsername() {
-  const { user, update } = useAuth()
+export function EditUserData() {
   const navigate = useNavigate()
+  const { user, updateUser } = useAuth()
   const [errs, setErrs] = useState<IUserFormErrors>({})
-  
+
   const [updateData, setUpdateData] = useState<IUpdateData>({
     username: user?.username,
     email: user?.email,
@@ -22,7 +22,7 @@ export function EditUsername() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const { data: { errors } } = await update(updateData)
+    const { data: { errors } } = await updateUser(updateData)
 
     if (errors) {
       setErrs(errors)

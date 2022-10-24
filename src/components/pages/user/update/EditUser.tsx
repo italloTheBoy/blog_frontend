@@ -1,5 +1,5 @@
 import { Card, ListGroup } from "react-bootstrap";
-import { EditUsername } from "./EditUsername";
+import { EditUserData } from "./EditUserData";
 
 export function EditUser() {
   return (
@@ -10,7 +10,7 @@ export function EditUser() {
         </Card.Title>
 
         <ListGroup>
-          <EditUsername />
+          <EditUserData />
         </ListGroup>
       </Card.Body>
     </Card>
