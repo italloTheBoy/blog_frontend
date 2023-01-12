@@ -1,12 +1,19 @@
 import { AxiosResponse } from 'axios'
 import { createContext, useEffect, useState } from 'react'
-import { redirect } from 'react-router-dom'
-import { AuthProviderParams, ContextData, ILoginData, IRegisterData, IUpdateData, TUser } from '../types/contexts/authTypes'
 import { api } from '../utils/api'
+import {
+  TUser,
+  IUser,
+  IAuthContext, 
+  IAuthProvider,  
+  ILoginParams,
+  IUpdateParams,
+  IRegiterParams,
+} from '../types/contexts/authTypes'
 
-export const AuthContext = createContext<ContextData>({} as ContextData)
+export const AuthContext = createContext<IAuthContext>({})
 
-export function AuthProvider({ children }: AuthProviderParams) {
+export function AuthProvider({ children }: IAuthProvider) {
   const [user, setUser] = useState<TUser>(null)
 
   useEffect(() => {
@@ -16,73 +23,26 @@ export function AuthProvider({ children }: AuthProviderParams) {
     if (storagedToken && storagedUser) {
       setUser(JSON.parse(storagedUser));
       api.defaults.headers.common['Authorization'] = `Bearer ${storagedToken}`;
-    }
-  }, []);
+    } 
+    else logout()
+  }, [])
 
-  const auth = (res: AxiosResponse<any, any>) => {
-    setUser(res.data.user)
-    api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+  const auth = async (token: string): Promise<void> => {
+    await api.get('/auth/user', {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      const  currentUser: IUser = res.data.data.user
 
-    localStorage.setItem('@App:user', JSON.stringify(res.data.user))
-    localStorage.setItem('@App:token', res.data.token)
-  }
+      setUser(currentUser)
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-  const register = async (data: IRegisterData) => {
-    try {
-      const res = await api.post('/users', data)
-
-      auth(res)
-
-      return res
-    }
-    catch (err: any) {
-      return err.response as AxiosResponse<any, any>
-    }
-  }
-
-  const updateUser = async (data: IUpdateData) => {
-    try {
-      const res = await api.patch(
-        `/users/${user?.id}`,
-        { changes: data }
-      )
-
-      const updatedUser = {...user, ...data} as TUser
-
-      setUser(updatedUser)
-      localStorage.setItem('@App:user', JSON.stringify(updatedUser))
-
-      return res
-    }
-    catch (err: any) {
-      return await err.response as AxiosResponse<any, any>
-    }
-  }
-
-  const deleteUser = async () => {
-    try {
-      const res = await api.delete(`/users/${user?.id}`)
-
-      logout()
-
-      return res
-    }
-    catch (err: any) {
-      return await err.response as AxiosResponse<any, any>
-    }
-  }
-
-  const login = async (data: ILoginData) => {
-    try {
-      const res = await api.post('/login', data)
-
-      auth(res)
-
-      return res
-    }
-    catch (err: any) {
-      return err.response as AxiosResponse<any, any>
-    }
+      localStorage.setItem('@App:token', token)
+      localStorage.setItem('@App:user', JSON.stringify(currentUser))
+    })
+    .catch(err => err.response as AxiosResponse<any, any>)
   }
 
   const logout = async (): Promise<void> => {
@@ -92,15 +52,67 @@ export function AuthProvider({ children }: AuthProviderParams) {
     localStorage.removeItem('@App:token')
   }
 
+  const refreshUser = async (): Promise<void> => {
+    await api.get('/auth/user')
+      .then(res => {
+        const refreshedUser = res.data.data.user
+
+        setUser(refreshedUser)
+        localStorage.setItem('@App:user', JSON.stringify(refreshedUser))
+      })
+      .catch(err => err.response as AxiosResponse<any, any>)
+  }
+
+  const register = async (params: IRegiterParams): Promise<AxiosResponse<any, any>> => {
+    return await api.post("/register", { user: params })
+    .then(async () => await api.post('/login', { credentials: params }))
+    .then(async res => {
+      await auth(res.data.data.token)
+      
+      return res
+    })
+    .catch(err => err.response as AxiosResponse<any, any>)
+  }
+
+  const login = async (params: ILoginParams): Promise<AxiosResponse<any, any>> => {
+    return await api.post('/login', { credentials: params })
+    .then(res => {
+      auth(res.data.data.token)
+
+      return res
+    })
+    .catch(err => err.response as AxiosResponse<any, any>)
+  }
+
+  const updateUser = async (params: IUpdateParams): Promise<AxiosResponse<any, any>> => {
+    return await api.patch(`/user/${user?.id}`, { changes: params })  
+    .then(async res => {
+      await refreshUser()
+
+      return res
+    })
+    .catch(err => err.response as AxiosResponse<any, any>)
+  }
+
+  const deleteUser = async (): Promise<AxiosResponse<any, any>> => {
+    return await api.delete(`/user/${user?.id}`)
+    .then(res => {
+      logout()
+
+      return res
+    })  
+    .catch(err => err.response as AxiosResponse<any, any>)
+  }
+
   return (
     <AuthContext.Provider value={{
       authenticated: Boolean(user),
       user,
       register,
+      login,
+      logout,
       updateUser,
       deleteUser,
-      login,
-      logout
     }}>
       {children}
     </AuthContext.Provider>

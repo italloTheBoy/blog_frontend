@@ -3,13 +3,13 @@ import { Alert, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { IRegisterData } from '../../../types/contexts/authTypes'
+import { IRegiterParams } from '../../../types/contexts/authTypes'
 import { IUserFormErrors } from '../../../types/errorsTypes'
 
 export function Register() {
   const [errs, setErrs] = useState<IUserFormErrors>({})
 
-  const [registerData, setRegisterData] = useState<IRegisterData>({
+  const [registerData, setRegisterData] = useState<IRegiterParams>({
     username: '',
     email: '',
     password: '',
@@ -26,7 +26,7 @@ export function Register() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const { data: { errors } } = await register(registerData)
+    const { data: { errors } } = await register!(registerData)
 
     if (errors) {
       setErrs(errors)
