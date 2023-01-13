@@ -18,26 +18,20 @@ export interface ILoginParams {
   password: string;
 }
 
-export interface IRegiterParams {
-  email: string;
-  username: string;
-  password: string;
-  password_confirmation: string;
-}
-
-export interface IUpdateParams {
+export interface IUserParams {
   email?: string;
   username?: string;
   password?: string;
+  password_confirmation?: string;
 }
 
 export interface IAuthContext {
   authenticated?: boolean;
   user?: TUser;
-  register?: (params: IRegiterParams) => Promise<AxiosResponse<any, any>>;
+  register?: (params: IUserParams) => Promise<AxiosResponse<any, any>>;
   login?: (params: ILoginParams) => Promise<AxiosResponse<any, any>>;
   logout?: () => Promise<void>;
-  updateUser?: (params: IUpdateParams) => Promise<AxiosResponse<any, any>>;
+  updateUser?: (params: IUserParams) => Promise<AxiosResponse<any, any>>;
   deleteUser?: () => Promise<AxiosResponse<any, any>>;
 }
 

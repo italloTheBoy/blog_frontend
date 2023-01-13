@@ -1,6 +1,6 @@
 import { useAuth } from "../../../hooks/useAuth"
-import { Button, Card, Form } from "react-bootstrap"
-import { ILoginData } from "../../../types/contexts/authTypes"
+import { Button, Form } from "react-bootstrap"
+import { ILoginParams } from "../../../types/contexts/authTypes"
 import { useNavigate } from "react-router-dom"
 import { useState, ChangeEvent, FormEvent } from "react"
 import { Alert } from "react-bootstrap"
@@ -13,7 +13,7 @@ export function Login() {
   const navigate = useNavigate()
   
   const [errs, setErrs] = useState<IErrors>({})
-  const [loginData, setLoginData] = useState<ILoginData>({
+  const [loginData, setLoginData] = useState<ILoginParams>({
     email: '',
     password: '',
   })
@@ -25,7 +25,7 @@ export function Login() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const { data: { errors } } = await login(loginData)
+    const { data: { errors } } = await login!(loginData)
 
     if (errors) {
       setErrs(errors)

@@ -1,17 +1,8 @@
-import { AxiosResponse } from 'axios'
-import { createContext, useEffect, useState } from 'react'
-import { api } from '../utils/api'
-import {
-  TUser,
-  IUser,
-  IAuthContext, 
-  IAuthProvider,  
-  ILoginParams,
-  IUpdateParams,
-  IRegiterParams,
-} from '../types/contexts/authTypes'
-
-export const AuthContext = createContext<IAuthContext>({})
+import { useEffect, useState } from "react";
+import { IAuthProvider, ILoginParams, IUserParams, IUser, TUser } from "../types/contexts/authTypes";
+import { api } from "../utils/api";
+import { AxiosResponse } from "axios";
+import { AuthContext } from "../contexts/auth";
 
 export function AuthProvider({ children }: IAuthProvider) {
   const [user, setUser] = useState<TUser>(null)
@@ -63,7 +54,7 @@ export function AuthProvider({ children }: IAuthProvider) {
       .catch(err => err.response as AxiosResponse<any, any>)
   }
 
-  const register = async (params: IRegiterParams): Promise<AxiosResponse<any, any>> => {
+  const register = async (params: IUserParams): Promise<AxiosResponse<any, any>> => {
     return await api.post("/register", { user: params })
     .then(async () => await api.post('/login', { credentials: params }))
     .then(async res => {
@@ -84,7 +75,7 @@ export function AuthProvider({ children }: IAuthProvider) {
     .catch(err => err.response as AxiosResponse<any, any>)
   }
 
-  const updateUser = async (params: IUpdateParams): Promise<AxiosResponse<any, any>> => {
+  const updateUser = async (params: IUserParams): Promise<AxiosResponse<any, any>> => {
     return await api.patch(`/user/${user?.id}`, { changes: params })  
     .then(async res => {
       await refreshUser()

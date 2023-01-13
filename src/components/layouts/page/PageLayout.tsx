@@ -5,9 +5,9 @@ import { Login } from "../../pages/auth/Login";
 import { Register } from "../../pages/auth/Register";
 import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/statusCode/NotFound";
-import { EditUser } from "../../pages/user/update/EditUser";
 import { Perfil } from "../../pages/user/Perfil";
 import { PageHeader } from "./PageHeader";
+import { UpdateUser } from "../../pages/user/UpdateUser";
 
 export function PageLayout() {
   const { authenticated } = useAuth()
@@ -16,7 +16,7 @@ export function PageLayout() {
     <>
       <Route path="" element={<Perfil />} />
       <Route path="user/perfil" element={<Perfil />} />
-      <Route path="user/edit" element={<EditUser />} />
+      <Route path="user/edit" element={<UpdateUser />} />
     </>
   )
 

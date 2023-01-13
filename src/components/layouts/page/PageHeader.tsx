@@ -6,23 +6,24 @@ export function PageHeader() {
   const { authenticated, logout, user } = useAuth()
   const navigate = useNavigate()
 
-  const authNav = (
+  const authenticatedNav = (
     <Nav as="ul">
       <Nav.Item as="li" key="username">
         <Nav.Link href="/user/perfil">{user?.username}</Nav.Link>
       </Nav.Item>
 
       <Nav.Item as="li" key="logout">
-        <Nav.Link onClick={() => {logout(); navigate('/');}}>Sair</Nav.Link>
+        <Nav.Link onClick={async () => {await logout!(); navigate('/');}}>Sair</Nav.Link>
       </Nav.Item>
     </Nav>
   )
 
-  const unAuthNav = (
+  const CommumNav = (
     <Nav as="ul">
       <Nav.Item as="li" key="login">
         <Nav.Link href="/login">Entrar</Nav.Link>
       </Nav.Item>
+
       <Nav.Item as="li" key="register">
         <Nav.Link href="/register">Cadastrar-se</Nav.Link>
       </Nav.Item>
@@ -39,7 +40,7 @@ export function PageHeader() {
 
           <Navbar.Toggle aria-controls="nav-menu" />
           <Navbar.Collapse id="nav-menu" className="justify-content-end">
-            {authenticated ? authNav : unAuthNav}
+            {authenticated ? authenticatedNav : CommumNav}
           </Navbar.Collapse>
         </Container>
       </Navbar>
