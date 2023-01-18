@@ -1,4 +1,11 @@
-import { Card, Container, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Card,
+  Container,
+  Navbar,
+  NavDropdown,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { useAuth } from "../../../hooks/useAuth";
 
 export function Perfil() {
@@ -23,7 +30,18 @@ export function Perfil() {
         </Navbar>
       </Card.Header>
 
-      <Card.Body></Card.Body>
+      <Card.Body>
+        <Container>
+          <Form className="d-grid gap-3 m-auto">
+            <Form.Control placeholder="Insira um titulo"></Form.Control>
+            <Form.Control type="text" as="textarea"></Form.Control>
+
+            <Button className="mt-1 p-2" type="submit">
+              Postar
+            </Button>
+          </Form>
+        </Container>
+      </Card.Body>
     </Card>
   );
 }

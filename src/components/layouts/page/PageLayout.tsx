@@ -5,12 +5,12 @@ import { Login } from "../../pages/auth/Login";
 import { Register } from "../../pages/auth/Register";
 import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/statusCode/NotFound";
-import { Perfil } from "../../pages/user/Perfil";
+import { Perfil } from "../../pages/user/perfil/Perfil";
 import { PageHeader } from "./PageHeader";
-import { UpdateUser } from "../../pages/user/UpdateUser";
+import { UpdateUser } from "../../pages/user/updateUser/UpdateUser";
 
 export function PageLayout() {
-  const { authenticated } = useAuth()
+  const { authenticated } = useAuth();
 
   const authRoutes = (
     <>
@@ -18,7 +18,7 @@ export function PageLayout() {
       <Route path="user/perfil" element={<Perfil />} />
       <Route path="user/edit" element={<UpdateUser />} />
     </>
-  )
+  );
 
   const unAuthRoutes = (
     <>
@@ -26,7 +26,7 @@ export function PageLayout() {
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
     </>
-  )
+  );
 
   return (
     <BrowserRouter>
@@ -39,5 +39,5 @@ export function PageLayout() {
         </Routes>
       </Container>
     </BrowserRouter>
-  )
-} 
+  );
+}
