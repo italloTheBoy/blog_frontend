@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { IPostErrors, IPostParams } from "../../../../types/postTypes";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../../utils/api";
+import { Input } from "../../../layouts/form/Input";
 
 export function PostForm() {
   const [createData, setCreateData] = useState<IPostParams>({});
@@ -22,6 +23,7 @@ export function PostForm() {
       setErrs(errors);
     } else {
       setCreateData({});
+      setErrs({});
       navigate("/");
     }
   };
@@ -38,39 +40,24 @@ export function PostForm() {
   };
 
   return (
-    <Container>
+    <Container as="section">
       <Form className="d-grid gap-2 m-auto" onSubmit={handleSubmit}>
-        <Form.Group controlId="title">
-          <Form.Control
-            name="title"
-            onChange={handleChange}
-            value={createData.title || ""}
-            placeholder="Insira um titulo"
-            aria-describedby={errs.title ? "titleErr" : undefined}
-          ></Form.Control>
+        <Input
+          name="title"
+          onChange={handleChange}
+          value={createData.title}
+          placeholder="Insira um titulo"
+          error={errs.title}
+        />
 
-          {errs.title && (
-            <Form.Text id="titleErr" className="text-danger">
-              {errs.title}
-            </Form.Text>
-          )}
-        </Form.Group>
-
-        <Form.Group controlId="body">
-          <Form.Control
-            name="body"
-            as="textarea"
-            onChange={handleChange}
-            value={createData.body || ""}
-            aria-describedby={errs.body ? "bodyErr" : undefined}
-          ></Form.Control>
-
-          {errs.title && (
-            <Form.Text id="bodyErr" className="text-danger">
-              {errs.title}
-            </Form.Text>
-          )}
-        </Form.Group>
+        <Input
+          name="body"
+          as="textarea"
+          onChange={handleChange}
+          value={createData.body}
+          placeholder="Insira seus pensamentos"
+          error={errs.title}
+        />
 
         <Button className="mt-1 p-2" type="submit">
           Postar
