@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { ReactNode } from "react";
 
-export type TUser = IUser | null;
+export type TUser = IUser | null | undefined; 
 
 export interface IAuthProvider {
   children: ReactNode;
