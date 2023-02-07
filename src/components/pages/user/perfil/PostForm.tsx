@@ -1,12 +1,12 @@
 import { Button, Container, Form } from "react-bootstrap";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IPostErrors, IPostParams } from "../../../../types/postTypes";
+import { IPostErrors, IPost } from "../../../../types/timelineTypes";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../../utils/api";
 import { Input } from "../../../layouts/form/Input";
 
 export function PostForm() {
-  const [createData, setCreateData] = useState<IPostParams>({});
+  const [createData, setCreateData] = useState<IPost>({});
   const [errs, setErrs] = useState<IPostErrors>({});
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export function PostForm() {
       [e.currentTarget.name]: e.currentTarget.value,
     });
 
-    console.log(createData)
+    console.log(createData);
   };
 
   return (
@@ -56,7 +56,7 @@ export function PostForm() {
           onChange={handleChange}
           value={createData.body}
           placeholder="Insira seus pensamentos"
-          error={errs.title}
+          error={errs.body}
         />
 
         <Button className="mt-1 p-2" type="submit">

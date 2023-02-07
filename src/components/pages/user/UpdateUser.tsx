@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../../hooks/useAuth";
-import { IUserParams } from "../../../../types/contexts/authTypes";
-import { IUserFormErrors } from "../../../../types/errorsTypes";
+import { useAuth } from "../../../hooks/useAuth";
+import { IUserParams } from "../../../types/contexts/authTypes";
+import { IUserFormErrors } from "../../../types/errorsTypes";
 
 export function UpdateUser() {
   const [errs, setErrs] = useState<IUserFormErrors>({});
