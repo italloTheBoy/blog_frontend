@@ -7,7 +7,7 @@ import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/statusCode/NotFound";
 import { Perfil } from "../../pages/user/perfil/Perfil";
 import { PageHeader } from "./PageHeader";
-import { UpdateUser } from "../../pages/user/updateUser/UpdateUser";
+import { UpdateUser } from "../../pages/user/UpdateUser";
 
 export function PageLayout() {
   const { authenticated } = useAuth();
