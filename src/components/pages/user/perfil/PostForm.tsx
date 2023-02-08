@@ -1,31 +1,24 @@
 import { Button, Container, Form } from "react-bootstrap";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IPostErrors, IPost } from "../../../../types/timelineTypes";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../../../utils/api";
+import { IPostErrors, IPostParams } from "../../../../types/timelineTypes";
 import { Input } from "../../../layouts/form/Input";
+import { TimelineAPI } from "../../../../helpers/TimelineAPI";
 
 export function PostForm() {
-  const [createData, setCreateData] = useState<IPost>({});
+  const [createData, setCreateData] = useState<IPostParams>({});
   const [errs, setErrs] = useState<IPostErrors>({});
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const {
-      data: { errors },
-    } = await api
-      .post("/post", { post: createData })
-      .catch((err) => err.response);
+    const body = { post: createData };
 
-    if (errors) {
-      setErrs(errors);
-    } else {
-      setCreateData({});
-      setErrs({});
-      navigate("/");
-    }
+    await TimelineAPI.createPost(body)
+      .then(() => {
+        setCreateData({});
+        setErrs({});
+      })
+      .catch((res) => setErrs(res.response.data.errors));
   };
 
   const handleChange = async (
@@ -43,18 +36,10 @@ export function PostForm() {
     <Container as="section">
       <Form className="d-grid gap-2 m-auto" onSubmit={handleSubmit}>
         <Input
-          name="title"
-          onChange={handleChange}
-          value={createData.title}
-          placeholder="Insira um titulo"
-          error={errs.title}
-        />
-
-        <Input
           name="body"
           as="textarea"
           onChange={handleChange}
-          value={createData.body}
+          value={createData.body || ""}
           placeholder="Insira seus pensamentos"
           error={errs.body}
         />

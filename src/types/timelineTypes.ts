@@ -4,9 +4,16 @@ export type reactionType = "like" | "dislike";
 
 export interface IPost {
   id: TId;
-  user_id: string | number;
-  title: string;
+  user_id: TId;
   body: string;
+}
+
+export interface IPostParams {
+  body?: string;
+}
+
+export interface IPostBody {
+  post: IPostParams;
 }
 
 export interface IReaction {

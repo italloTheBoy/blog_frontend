@@ -3,13 +3,13 @@ import { Alert, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { IRegiterParams } from '../../../types/contexts/authTypes'
 import { IUserFormErrors } from '../../../types/errorsTypes'
+import { IUserParams } from '../../../types/contexts/authTypes'
 
 export function Register() {
   const [errs, setErrs] = useState<IUserFormErrors>({})
 
-  const [registerData, setRegisterData] = useState<IRegiterParams>({
+  const [registerData, setRegisterData] = useState<IUserParams>({
     username: '',
     email: '',
     password: '',

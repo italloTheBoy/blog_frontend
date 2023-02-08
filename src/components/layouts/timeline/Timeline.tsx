@@ -14,7 +14,7 @@ export function Timeline(props: TimelineProps) {
       {posts.length === 0 ? (
         <p>Não encontramos nemhuma postagem</p>
       ) : (
-        posts.map((post) => <TimelinePost post={post} />)
+        posts.map((post) => <TimelinePost post={post} key={post.id} />)
       )}
     </>
   );

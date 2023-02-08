@@ -45,14 +45,14 @@ export function ReactionButton(props: ReactionButtonProps) {
 
   const handleLike = () => {
     if (!reaction?.type) createReaction("like");
-    if (reaction!.type !== "like") updateReaction();
-    if (reaction!.type === "like") deleteReaction();
+    else if (reaction!.type !== "like") updateReaction();
+    else if (reaction!.type === "like") deleteReaction();
   };
 
   const handleDislike = () => {
     if (!reaction?.type) createReaction("dislike");
-    if (reaction!.type !== "dislike") updateReaction();
-    if (reaction!.type === "dislike") deleteReaction();
+    else if (reaction!.type !== "dislike") updateReaction();
+    else if (reaction!.type === "dislike") deleteReaction();
   };
 
   const likeBtnClass = `bi ${

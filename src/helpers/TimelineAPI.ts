@@ -1,8 +1,12 @@
 import { TId } from "../types/appTypes";
-import { IPost, IReactionBody } from "../types/timelineTypes";
+import { IPost, IPostBody, IReactionBody } from "../types/timelineTypes";
 import { api } from "../utils/api";
 
 export class TimelineAPI {
+  static async createPost(body: IPostBody) {
+    return await api.post(`/post`, body);
+  }
+
   static async ListUserPosts(
     id: string | number,
     setCallback: React.Dispatch<React.SetStateAction<IPost[]>> = () => {}
