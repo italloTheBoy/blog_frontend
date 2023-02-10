@@ -1,13 +1,8 @@
-import { Container } from "react-bootstrap";
-import { IPost } from "../../../types/timelineTypes";
 import { TimelinePost } from "./TimelinePost";
+import { useTimeline } from "../../../hooks/useTimeline";
 
-interface TimelineProps {
-  posts?: IPost[];
-}
-
-export function Timeline(props: TimelineProps) {
-  const { posts = [] } = props;
+export function Timeline() {
+  const { posts } = useTimeline();
 
   return (
     <>

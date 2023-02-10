@@ -3,8 +3,10 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { IPostErrors, IPostParams } from "../../../../types/timelineTypes";
 import { Input } from "../../../layouts/form/Input";
 import { TimelineAPI } from "../../../../helpers/TimelineAPI";
+import { useTimeline } from "../../../../hooks/useTimeline";
 
 export function PostForm() {
+  const { loadPosts } = useTimeline();
   const [createData, setCreateData] = useState<IPostParams>({});
   const [errs, setErrs] = useState<IPostErrors>({});
 
@@ -17,6 +19,7 @@ export function PostForm() {
       .then(() => {
         setCreateData({});
         setErrs({});
+        loadPosts();
       })
       .catch((res) => setErrs(res.response.data.errors));
   };
@@ -28,8 +31,6 @@ export function PostForm() {
       ...createData,
       [e.currentTarget.name]: e.currentTarget.value,
     });
-
-    console.log(createData);
   };
 
   return (

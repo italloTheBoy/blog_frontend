@@ -5,6 +5,7 @@ import { api } from "../../../utils/api";
 import { TUser } from "../../../types/contexts/authTypes";
 import { ReactionButton } from "./ReactionButton";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
+import { useTimeline } from "../../../hooks/useTimeline";
 
 interface TimelinePostProps {
   post: IPost;
@@ -13,6 +14,7 @@ interface TimelinePostProps {
 export function TimelinePost(props: TimelinePostProps) {
   const { post } = props;
 
+  const { loadPosts } = useTimeline();
   const [author, setAuthor] = useState<TUser>(undefined);
 
   const loadUser = async () => {
@@ -22,7 +24,7 @@ export function TimelinePost(props: TimelinePostProps) {
   };
 
   const handlePostDelete = async () => {
-    await TimelineAPI.deletePost(post.id);
+    await TimelineAPI.deletePost(post.id).then(() => loadPosts());
   };
 
   useEffect(() => {

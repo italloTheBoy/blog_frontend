@@ -7,13 +7,8 @@ export class TimelineAPI {
     return await api.post(`/post`, body);
   }
 
-  static async ListUserPosts(
-    id: string | number,
-    setCallback: React.Dispatch<React.SetStateAction<IPost[]>> = () => {}
-  ) {
-    await api
-      .get(`/user/${id}/posts`)
-      .then((res) => setCallback(res.data.data.posts));
+  static async ListUserPosts(id: TId) {
+    return await api.get(`/user/${id}/posts`);
   }
 
   static async deletePost(id: TId) {
@@ -35,7 +30,7 @@ export class TimelineAPI {
   static async toggleReactionType(id: TId) {
     return await api.patch(`/reaction/${id}`);
   }
-  
+
   static async deleteReaction(id: TId) {
     return await api.delete(`/reaction/${id}`);
   }
