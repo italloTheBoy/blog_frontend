@@ -30,6 +30,12 @@ export interface ICommentReaction extends IReaction {
   comment_id: TId;
 }
 
+export interface IReactionsMetrics {
+  reactions: number;
+  likes: number;
+  dislikes: number;
+}
+
 export interface IPostErrors {
   detail?: string;
   title?: string;

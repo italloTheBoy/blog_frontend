@@ -9,7 +9,7 @@ export function Perfil() {
 
   return (
     <TimelineProvier font={{ type: "user", id: user!.id }}>
-      <Container className="m-auto w-75 p-2 d-grid gap-3">
+      <Container as="header" className="m-auto w-75 p-2 d-grid gap-3">
         <Card>
           <Card.Header className="p-0">
             <Navbar>

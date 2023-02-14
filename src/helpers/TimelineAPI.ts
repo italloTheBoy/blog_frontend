@@ -27,6 +27,14 @@ export class TimelineAPI {
     return await api.get(`/post/${id}/reaction`);
   }
 
+  static async getPostReactionsMetrics(id: TId) {
+    return await api.get(`/post/${id}/reactions/metrics`);
+  }
+
+  static async getCommentReactionsMetrics(id: TId) {
+    return await api.get(`/comment/${id}/reactions/metrics`);
+  }
+
   static async toggleReactionType(id: TId) {
     return await api.patch(`/reaction/${id}`);
   }

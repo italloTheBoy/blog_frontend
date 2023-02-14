@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Card, Container } from "react-bootstrap";
-import { IPostReaction, reactionType } from "../../../types/timelineTypes";
+import {
+  IPostReaction,
+  IReactionsMetrics,
+  reactionType,
+} from "../../../types/timelineTypes";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import { TId } from "../../../types/appTypes";
 
@@ -15,9 +19,19 @@ export function ReactionButton(props: ReactionButtonProps) {
     undefined
   );
 
+  const [metrics, setMetrics] = useState<IReactionsMetrics | undefined>(
+    undefined
+  );
+
   const loadReaction = async () => {
     await TimelineAPI.getReactionByPost(postId).then((res) =>
       setReaction(res.data.data.reaction)
+    );
+  };
+
+  const loadMetrics = async () => {
+    await TimelineAPI.getPostReactionsMetrics(postId).then((res) =>
+      setMetrics(res.data.data)
     );
   };
 
@@ -69,15 +83,25 @@ export function ReactionButton(props: ReactionButtonProps) {
     loadReaction();
   }, []);
 
+  useEffect(() => {
+    loadMetrics();
+  }, [reaction]);
+
   return (
     <Container className="ps-0">
-      <Card.Link className="text-primary fs-5" onClick={handleLike}>
-        <i className={likeBtnClass}></i>
+      <Card.Link
+        className="text-decoration-none text-primary fs-5"
+        onClick={handleLike}
+      >
+        <i className={likeBtnClass}>{metrics?.likes}</i>
       </Card.Link>
 
-      <Card.Link className="text-danger fs-5" onClick={handleDislike}>
-        <i className={dislikeBtnClass}></i>
+      <Card.Link
+        className="text-decoration-none text-danger fs-5"
+        onClick={handleDislike}
+      >
+        <i className={dislikeBtnClass}>{metrics?.dislikes}</i>
       </Card.Link>
     </Container>
-  );
+  )
 }
