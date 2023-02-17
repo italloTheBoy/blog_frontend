@@ -88,7 +88,7 @@ export function ReactionButton(props: ReactionButtonProps) {
   }, [reaction]);
 
   return (
-    <Container className="ps-0">
+    <Container as="section" className="ps-0">
       <Card.Link
         className="text-decoration-none text-primary fs-5"
         onClick={handleLike}
@@ -103,5 +103,5 @@ export function ReactionButton(props: ReactionButtonProps) {
         <i className={dislikeBtnClass}>{metrics?.dislikes}</i>
       </Card.Link>
     </Container>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { Card, Container, Navbar, NavDropdown } from "react-bootstrap";
+import { Badge, Card, Container, Navbar, NavDropdown } from "react-bootstrap";
 import { useAuth } from "../../../../hooks/useAuth";
 import { PostForm } from "./PostForm";
 import { Timeline } from "../../../layouts/timeline/Timeline";
@@ -9,16 +9,16 @@ export function Perfil() {
 
   return (
     <TimelineProvier font={{ type: "user", id: user!.id }}>
-      <Container as="header" className="m-auto w-75 p-2 d-grid gap-3">
-        <Card>
-          <Card.Header className="p-0">
-            <Navbar>
+      <Container as="main" className="m-auto w-75 p-2 d-grid gap-3">
+        <Card as="header">
+          <Card.Header as="header" className="p-0">
+            <Navbar as="nav">
               <Container>
                 <Navbar.Brand as="h1" className="fs-2">
                   {user?.username}
                 </Navbar.Brand>
 
-                <NavDropdown title="Opções " className="justify-content-end">
+                <NavDropdown as="nav" title="Opções " className="justify-content-end">
                   <NavDropdown.Item href="/user/edit">Editar</NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={deleteUser}
@@ -36,7 +36,9 @@ export function Perfil() {
           </Card.Body>
         </Card>
 
-        <Timeline />
+        <Container as="main" className="p-0 d-grid gap-3">
+          <Timeline />
+        </Container>
       </Container>
     </TimelineProvier>
   );

@@ -33,13 +33,13 @@ export function TimelinePost(props: TimelinePostProps) {
 
   return (
     <Card as="article">
-      <Card.Header className="d-flex">
-        <Container as="section" className="ps-0 w-100">
-          <Card.Title>{author?.username || "anonymous"}</Card.Title>
-        </Container>
+      <Card.Header as="header" className="d-flex justify-content-between pb-0">
+        <Card.Title as="h2" className="fs-4">
+          {author?.username}
+        </Card.Title>
 
         {author?.id === post.user_id && (
-          <NavDropdown title="Opções " className="justify-content-end">
+          <NavDropdown as="nav" title="Opções " className="justify-content-end">
             <NavDropdown.Item
               className="text-danger"
               onClick={handlePostDelete}
@@ -50,11 +50,11 @@ export function TimelinePost(props: TimelinePostProps) {
         )}
       </Card.Header>
 
-      <Card.Body as="section">
+      <Card.Body as="main">
         <Card.Text>{post.body}</Card.Text>
       </Card.Body>
 
-      <Card.Footer className="border-0 pt-0">
+      <Card.Footer as="nav" className="border-0 pt-0">
         <ReactionButton postId={post.id} />
       </Card.Footer>
     </Card>
