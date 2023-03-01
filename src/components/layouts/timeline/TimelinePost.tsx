@@ -1,4 +1,4 @@
-import { Card, Container, NavDropdown } from "react-bootstrap";
+import { Card, NavDropdown } from "react-bootstrap";
 import { IPost } from "../../../types/timelineTypes";
 import { useEffect, useState } from "react";
 import { api } from "../../../utils/api";
@@ -6,6 +6,7 @@ import { TUser } from "../../../types/contexts/authTypes";
 import { ReactionButton } from "./ReactionButton";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import { useTimeline } from "../../../hooks/useTimeline";
+import { CommentButton } from "./CommentButton";
 
 interface TimelinePostProps {
   post: IPost;
@@ -56,6 +57,7 @@ export function TimelinePost(props: TimelinePostProps) {
 
       <Card.Footer as="nav" className="border-0 pt-0">
         <ReactionButton postId={post.id} />
+        <CommentButton />
       </Card.Footer>
     </Card>
   );

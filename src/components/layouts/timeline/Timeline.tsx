@@ -1,5 +1,6 @@
 import { TimelinePost } from "./TimelinePost";
 import { useTimeline } from "../../../hooks/useTimeline";
+import { PostProvider } from "../../../provider/PostProvider";
 
 export function Timeline() {
   const { posts } = useTimeline();
@@ -9,7 +10,11 @@ export function Timeline() {
       {posts.length === 0 ? (
         <p>Não encontramos nemhuma postagem</p>
       ) : (
-        posts.map((post) => <TimelinePost post={post} key={post.id} />)
+        posts.map((post) => (
+          <PostProvider postId={post.id} key={post.id}>
+            <TimelinePost post={post} />
+          </PostProvider>
+        ))
       )}
     </>
   );

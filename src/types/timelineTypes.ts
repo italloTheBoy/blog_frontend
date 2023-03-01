@@ -16,6 +16,31 @@ export interface IPostBody {
   post: IPostParams;
 }
 
+export interface IPostErrors {
+  detail?: string;
+  body?: string;
+}
+
+export interface IComment {
+  id: TId;
+  user_id: TId;
+  posts_id: TId | undefined;
+  comment_id: TId | undefined;
+  body: string;
+}
+
+export interface ICommentParams {
+  body?: string;
+}
+
+export interface ICommentBody {
+  comment: ICommentParams;
+}
+
+export interface ICommentErrors {
+  body?: string[];
+}
+
 export interface IReaction {
   id: TId;
   user_id: TId;
@@ -34,12 +59,6 @@ export interface IReactionsMetrics {
   reactions: number;
   likes: number;
   dislikes: number;
-}
-
-export interface IPostErrors {
-  detail?: string;
-  title?: string;
-  body?: string;
 }
 
 export interface IReactionBody {
