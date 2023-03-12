@@ -1,15 +1,17 @@
 import { ReactNode } from "react";
-import { TId } from "../appTypes";
-import { IPost } from "../timelineTypes";
+import { IPost, ITimelineMetrics } from "../timelineTypes";
 
-type post = IPost | null 
+type post = IPost | null;
+type postMetrics = ITimelineMetrics | null;
 
 export interface IPostContext {
   post: post;
+  postMetrics: postMetrics;
   loadPost: () => Promise<void>;
+  loadPostMetrics: () => Promise<void>;
 }
 
 export interface IPostProvider {
   children: ReactNode;
-  postId: TId;
+  postData: IPost;
 }

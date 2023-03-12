@@ -1,37 +1,19 @@
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import {
-  IPostReaction,
-  IReactionsMetrics,
-  reactionType,
-} from "../../../types/timelineTypes";
+import { IPostReaction, reactionType } from "../../../types/timelineTypes";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
-import { TId } from "../../../types/appTypes";
+import { usePost } from "../../../hooks/usePost";
 
-interface ReactionButtonProps {
-  postId: TId;
-}
-
-export function ReactionButton(props: ReactionButtonProps) {
-  const { postId } = props;
+export function ReactionButton() {
+  const { post, postMetrics, loadPostMetrics } = usePost();
 
   const [reaction, setReaction] = useState<IPostReaction | undefined>(
     undefined
   );
 
-  const [metrics, setMetrics] = useState<IReactionsMetrics | undefined>(
-    undefined
-  );
-
   const loadReaction = async () => {
-    await TimelineAPI.getReactionByPost(postId).then((res) =>
+    await TimelineAPI.getReactionByPost(post!.id).then((res) =>
       setReaction(res.data.data.reaction)
-    );
-  };
-
-  const loadMetrics = async () => {
-    await TimelineAPI.getPostReactionsMetrics(postId).then((res) =>
-      setMetrics(res.data.data)
     );
   };
 
@@ -40,7 +22,7 @@ export function ReactionButton(props: ReactionButtonProps) {
       reaction: { type },
     };
 
-    await TimelineAPI.reactPost(postId, body)
+    await TimelineAPI.reactPost(post!.id, body)
       .then((res) => TimelineAPI.getReaction(res.data.data.id))
       .then((res) => setReaction(res.data.data.reaction));
   };
@@ -52,21 +34,21 @@ export function ReactionButton(props: ReactionButtonProps) {
   };
 
   const deleteReaction = async () => {
-    await TimelineAPI.deleteReaction(reaction!.id).then((res) =>
+    await TimelineAPI.deleteReaction(reaction!.id).then(() =>
       setReaction(undefined)
     );
   };
 
   const handleLike = () => {
-    if (!reaction?.type) createReaction("like");
-    else if (reaction!.type !== "like") updateReaction();
-    else if (reaction!.type === "like") deleteReaction();
+    if (!reaction) createReaction("like");
+    else if (reaction.type === "dislike") updateReaction();
+    else if (reaction.type === "like") deleteReaction();
   };
 
   const handleDislike = () => {
-    if (!reaction?.type) createReaction("dislike");
-    else if (reaction!.type !== "dislike") updateReaction();
-    else if (reaction!.type === "dislike") deleteReaction();
+    if (!reaction) createReaction("dislike");
+    else if (reaction.type === "like") updateReaction();
+    else if (reaction.type === "dislike") deleteReaction();
   };
 
   const likeBtnClass = `bi ${
@@ -84,7 +66,7 @@ export function ReactionButton(props: ReactionButtonProps) {
   }, []);
 
   useEffect(() => {
-    loadMetrics();
+    loadPostMetrics();
   }, [reaction]);
 
   return (
@@ -93,14 +75,14 @@ export function ReactionButton(props: ReactionButtonProps) {
         className="text-decoration-none text-primary fs-5"
         onClick={handleLike}
       >
-        <i className={likeBtnClass}>{metrics?.likes}</i>
+        <i className={likeBtnClass}>{postMetrics?.likes}</i>
       </Card.Link>
 
       <Card.Link
         className="text-decoration-none text-danger fs-5"
         onClick={handleDislike}
       >
-        <i className={dislikeBtnClass}>{metrics?.dislikes}</i>
+        <i className={dislikeBtnClass}>{postMetrics?.dislikes}</i>
       </Card.Link>
     </>
   );

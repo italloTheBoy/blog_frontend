@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Card, Form, Modal } from "react-bootstrap";
 import { Input } from "../form/Input";
 import {
@@ -10,7 +10,7 @@ import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import { usePost } from "../../../hooks/usePost";
 
 export function CommentButton() {
-  const { post } = usePost();
+  const { post, postMetrics, loadPostMetrics } = usePost();
 
   const [show, setShow] = useState<boolean>(false);
   const [errs, setErrs] = useState<ICommentErrors>({});
@@ -40,13 +40,17 @@ export function CommentButton() {
       .catch((res) => setErrs(res.response.data.errors));
   };
 
+  useEffect(() => {
+    loadPostMetrics();
+  }, [postMetrics]);
+
   return (
     <>
       <Card.Link
         className="pe-1 text-decoration-none text-secondary fs-5 ps-1"
         onClick={handleOpen}
       >
-        <i className="bi bi-chat"></i>
+        <i className="bi bi-chat">{postMetrics?.comments}</i>
       </Card.Link>
 
       <Modal show={show} onHide={handleClose}>

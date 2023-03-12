@@ -56,7 +56,7 @@ export function TimelinePost(props: TimelinePostProps) {
       </Card.Body>
 
       <Card.Footer as="nav" className="border-0 pt-0">
-        <ReactionButton postId={post.id} />
+        <ReactionButton />
         <CommentButton />
       </Card.Footer>
     </Card>

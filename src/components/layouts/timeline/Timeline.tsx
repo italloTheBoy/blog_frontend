@@ -11,7 +11,7 @@ export function Timeline() {
         <p>Não encontramos nemhuma postagem</p>
       ) : (
         posts.map((post) => (
-          <PostProvider postId={post.id} key={post.id}>
+          <PostProvider postData={post} key={post.id}>
             <TimelinePost post={post} />
           </PostProvider>
         ))

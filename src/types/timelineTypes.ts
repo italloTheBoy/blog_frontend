@@ -2,6 +2,13 @@ import { TId } from "./appTypes";
 
 export type reactionType = "like" | "dislike";
 
+export interface ITimelineMetrics {
+  comments: number;
+  reactions: number;
+  likes: number;
+  dislikes: number;
+}
+
 export interface IPost {
   id: TId;
   user_id: TId;

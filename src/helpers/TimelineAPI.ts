@@ -31,12 +31,12 @@ export class TimelineAPI {
     return await api.get(`/post/${id}/reaction`);
   }
 
-  static async getPostReactionsMetrics(id: TId) {
-    return await api.get(`/post/${id}/reactions/metrics`);
+  static async getPostMetrics(id: TId) {
+    return await api.get(`/post/${id}/metrics`);
   }
 
-  static async getCommentReactionsMetrics(id: TId) {
-    return await api.get(`/comment/${id}/reactions/metrics`);
+  static async getCommentMetrics(id: TId) {
+    return await api.get(`/comment/${id}/metrics`);
   }
 
   static async ListUserPosts(id: TId) {
