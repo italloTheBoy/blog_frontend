@@ -1,15 +1,30 @@
 import { Card, Container } from "react-bootstrap";
-import { useAuth } from "../../../../hooks/useAuth";
 import { PostForm } from "./PostForm";
 import { Timeline } from "../../../layouts/timeline/Timeline";
 import { TimelineProvier } from "../../../../provider/TimelineProvider";
 import { PerfilNavbar } from "./PerfilNavbar";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { NotFound } from "../../statusCode/NotFound";
+import { AuthAPI } from "../../../../helpers/AuthAPI";
+import { IUser } from "../../../../types/contexts/authTypes";
 
 export function Perfil() {
-  const { user, deleteUser } = useAuth();
+  const { id } = useParams();
+  const [user, setUser] = useState<IUser | null>(null);
 
-  return (
-    <TimelineProvier font={{ type: "user", id: user!.id }}>
+  const loadUser = async () => {
+    await AuthAPI.getUser(id!)
+      .then((res) => setUser(res.data.data))
+      .catch(() => setUser(null));
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  return user ? (
+    <TimelineProvier font={{ type: "user", id: id! }}>
       <Container as="main" className="m-auto w-75 p-2 d-grid gap-3">
         <Card as="header">
           <Card.Header as="header" className="p-0">
@@ -26,5 +41,7 @@ export function Perfil() {
         </Container>
       </Container>
     </TimelineProvier>
+  ) : (
+    <NotFound />
   );
 }

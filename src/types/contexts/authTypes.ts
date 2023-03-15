@@ -1,8 +1,6 @@
 import { AxiosResponse } from "axios";
 import { ReactNode } from "react";
 
-export type TUser = IUser | null | undefined; 
-
 export interface IAuthProvider {
   children: ReactNode;
 }
@@ -26,8 +24,8 @@ export interface IUserParams {
 }
 
 export interface IAuthContext {
-  authenticated?: boolean;
-  user?: TUser;
+  authenticated: boolean;
+  user: IUser | null;
   register?: (params: IUserParams) => Promise<AxiosResponse<any, any>>;
   login?: (params: ILoginParams) => Promise<AxiosResponse<any, any>>;
   logout?: () => Promise<void>;

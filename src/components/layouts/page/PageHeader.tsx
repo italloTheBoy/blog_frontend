@@ -9,7 +9,7 @@ export function PageHeader() {
   const authenticatedNav = (
     <Nav as="ul">
       <Nav.Item as="li" key="username">
-        <Nav.Link href="/user/perfil">{user?.username}</Nav.Link>
+        <Nav.Link href={`/perfil/${user?.id}`}>{user?.username}</Nav.Link>
       </Nav.Item>
 
       <Nav.Item as="li" key="logout">

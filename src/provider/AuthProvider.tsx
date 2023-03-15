@@ -4,14 +4,13 @@ import {
   ILoginParams,
   IUserParams,
   IUser,
-  TUser,
 } from "../types/contexts/authTypes";
 import { api } from "../utils/api";
 import { AxiosResponse } from "axios";
-import { AuthContext } from "../contexts/auth";
+import { AuthContext } from "../contexts/AuthContext";
 
 export function AuthProvider({ children }: IAuthProvider) {
-  const [user, setUser] = useState<TUser>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
     const storagedUser = localStorage.getItem("@App:user");

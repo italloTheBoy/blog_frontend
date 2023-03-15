@@ -12,7 +12,7 @@ export function Timeline() {
       ) : (
         posts.map((post) => (
           <PostProvider postData={post} key={post.id}>
-            <TimelinePost post={post} />
+            <TimelinePost />
           </PostProvider>
         ))
       )}

@@ -14,8 +14,7 @@ export function PageLayout() {
 
   const authRoutes = (
     <>
-      <Route path="" element={<Perfil />} />
-      <Route path="user/perfil" element={<Perfil />} />
+      <Route path="perfil" element={<Perfil />} />
       <Route path="user/edit" element={<UpdateUser />} />
     </>
   );
@@ -34,6 +33,8 @@ export function PageLayout() {
       <Container>
         <Routes>
           <Route path="*" element={<NotFound />} />
+          <Route path="error/notfound" element={<NotFound />} />
+          <Route path="perfil/:id" element={<Perfil />} />
 
           {authenticated ? authRoutes : unAuthRoutes}
         </Routes>
