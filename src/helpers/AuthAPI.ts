@@ -4,10 +4,14 @@ import { api } from "../utils/api";
 
 export class AuthAPI {
   static async getUser(id: TId) {
-    return await api.get<{data: IUser}>(`/user/${id}`);
+    return await api.get<{ data: { user: IUser } }>(`/user/${id}`);
   }
 
   static async getCurrentUser() {
     return await api.get(`/auth/user`);
+  }
+
+  static async deleteUser(id: TId) {
+    return await api.delete(`/user/${id}`);
   }
 }

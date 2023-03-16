@@ -1,8 +1,17 @@
 import { Navbar, Container, NavDropdown } from "react-bootstrap";
 import { useAuth } from "../../../../hooks/useAuth";
+import { IUser } from "../../../../types/contexts/authTypes";
+import { AuthAPI } from "../../../../helpers/AuthAPI";
 
-export function PerfilNavbar() {
-  const { user, deleteUser } = useAuth();
+interface PerfilNavbarProps {
+  user: IUser;
+  authorization: boolean;
+}
+
+export function PerfilNavbar({ user, authorization }: PerfilNavbarProps) {
+  const deleteUser = () => {
+    AuthAPI.deleteUser(user.id);
+  };
 
   return (
     <Navbar as="nav">
@@ -11,12 +20,14 @@ export function PerfilNavbar() {
           {user?.username}
         </Navbar.Brand>
 
-        <NavDropdown as="nav" title="Opções " className="justify-content-end">
-          <NavDropdown.Item href="/user/edit">Editar</NavDropdown.Item>
-          <NavDropdown.Item onClick={deleteUser} className="text-danger">
-            Deletar
-          </NavDropdown.Item>
-        </NavDropdown>
+        {authorization && (
+          <NavDropdown as="nav" title="Opções " className="justify-content-end">
+            <NavDropdown.Item href="/user/edit">Editar</NavDropdown.Item>
+            <NavDropdown.Item onClick={deleteUser} className="text-danger">
+              Deletar
+            </NavDropdown.Item>
+          </NavDropdown>
+        )}
       </Container>
     </Navbar>
   );

@@ -1,19 +1,22 @@
 import { Card, NavDropdown } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { api } from "../../../utils/api";
-import { TUser } from "../../../types/contexts/authTypes";
 import { ReactionButton } from "./ReactionButton";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import { useTimeline } from "../../../hooks/useTimeline";
 import { CommentButton } from "./CommentButton";
 import { usePost } from "../../../hooks/usePost";
+import { useAuth } from "../../../hooks/useAuth";
+import { IUser } from "../../../types/contexts/authTypes";
 
 export function TimelinePost() {
   const { post } = usePost();
+  const { user: currentUser } = useAuth();
   const { loadPosts } = useTimeline();
-  const [author, setAuthor] = useState<TUser>(undefined);
+  const [author, setAuthor] = useState<IUser | null>(null);
+  const [authorization, setAuthorization] = useState<boolean>(false);
 
-  const loadUser = async () => {
+  const loadAuthor = async () => {
     await api
       .get(`/user/${post!.user_id}`)
       .then((res) => setAuthor(res.data.data.user));
@@ -24,8 +27,14 @@ export function TimelinePost() {
   };
 
   useEffect(() => {
-    loadUser();
+    loadAuthor();
   }, []);
+
+  useEffect(() => {
+    author?.id === currentUser?.id
+      ? setAuthorization(true)
+      : setAuthorization(false);
+  }, [author]);
 
   return (
     post && (
@@ -38,7 +47,7 @@ export function TimelinePost() {
             {author?.username}
           </Card.Title>
 
-          {author?.id === post.user_id && (
+          {authorization && (
             <NavDropdown
               as="nav"
               title="Opções "
