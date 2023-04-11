@@ -1,5 +1,4 @@
 import { Navbar, Container, NavDropdown } from "react-bootstrap";
-import { useAuth } from "../../../../hooks/useAuth";
 import { IUser } from "../../../../types/contexts/authTypes";
 import { AuthAPI } from "../../../../helpers/AuthAPI";
 

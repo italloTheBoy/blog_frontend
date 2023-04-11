@@ -8,6 +8,7 @@ import { CommentButton } from "./CommentButton";
 import { usePost } from "../../../hooks/usePost";
 import { useAuth } from "../../../hooks/useAuth";
 import { IUser } from "../../../types/contexts/authTypes";
+import { Link } from "react-router-dom";
 
 export function TimelinePost() {
   const { post } = usePost();
@@ -44,9 +45,13 @@ export function TimelinePost() {
           className="d-flex justify-content-between pb-0"
         >
           <Card.Title as="h2" className="fs-4">
-            {author?.username}
+            <Link
+              to={`/perfil/${author?.id}`}
+              className="text-decoration-none text-dark"
+            >
+              {author?.username}
+            </Link>
           </Card.Title>
-
           {authorization && (
             <NavDropdown
               as="nav"
@@ -70,6 +75,7 @@ export function TimelinePost() {
         <Card.Footer as="nav" className="border-0 pt-0">
           <ReactionButton />
           <CommentButton />
+          <Card.Link href={`/post/${post.id}`}>Veja mais...</Card.Link>
         </Card.Footer>
       </Card>
     )

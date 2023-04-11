@@ -1,5 +1,10 @@
 import { TId } from "../types/appTypes";
-import { ICommentBody, IPostBody, IReactionBody } from "../types/timelineTypes";
+import {
+  ICommentBody,
+  IPost,
+  IPostBody,
+  IReactionBody,
+} from "../types/timelineTypes";
 import { api } from "../utils/api";
 
 export class TimelineAPI {
@@ -20,7 +25,7 @@ export class TimelineAPI {
   }
 
   static async getPost(id: TId) {
-    return await api.get(`/post/${id}`);
+    return await api.get<{ data: { post: IPost } }>(`/post/${id}`);
   }
 
   static async getReaction(id: TId) {

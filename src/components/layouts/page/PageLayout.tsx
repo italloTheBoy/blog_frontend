@@ -8,6 +8,7 @@ import { NotFound } from "../../pages/statusCode/NotFound";
 import { Perfil } from "../../pages/user/perfil/Perfil";
 import { PageHeader } from "./PageHeader";
 import { UpdateUser } from "../../pages/user/UpdateUser";
+import { PostPage } from "../../pages/post_page/PostPage";
 
 export function PageLayout() {
   const { authenticated } = useAuth();
@@ -35,6 +36,7 @@ export function PageLayout() {
           <Route path="*" element={<NotFound />} />
           <Route path="error/notfound" element={<NotFound />} />
           <Route path="perfil/:id" element={<Perfil />} />
+          <Route path="post/:id" element={<PostPage />} />
 
           {authenticated ? authRoutes : unAuthRoutes}
         </Routes>
