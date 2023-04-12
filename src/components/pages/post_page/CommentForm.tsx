@@ -1,3 +1,3 @@
 export function CommentForm() {
-  return <></>;
+  return <></>
 }
