@@ -4,7 +4,7 @@ interface props {
   handleDelete: () => Promise<void>;
 }
 
-export function PostNav({ handleDelete }: props) {
+export function PostOptionsNav({ handleDelete }: props) {
   return (
     <NavDropdown as="nav" title="Opções">
       <NavDropdown.Item className="text-danger" onClick={handleDelete}>

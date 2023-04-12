@@ -1,14 +1,14 @@
-import { Card, NavDropdown } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { usePost } from "../../../hooks/usePost";
 import { useEffect } from "react";
 import { ReactionButton } from "../../layouts/timeline/ReactionButton";
 import { useAuth } from "../../../hooks/useAuth";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import { useNavigate } from "react-router-dom";
-import { PostNav } from "./PostNav";
+import { PostOptionsNav } from "./PostOptionsNav";
 
 export function PostCard() {
-  console.log(1)
+  console.log(1);
   const { post, postAuthor, loadPostAuthor } = usePost();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -35,9 +35,7 @@ export function PostCard() {
             {postAuthor?.username}
           </Card.Link>
         </h1>
-        {isAuthor && (
-          <PostNav handleDelete={handleDelete} />
-        )}
+        {isAuthor && <PostOptionsNav handleDelete={handleDelete} />}
       </Card.Title>
       <Card.Text>{post!.body}</Card.Text>
       <nav>
