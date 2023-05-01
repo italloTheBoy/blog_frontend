@@ -45,7 +45,7 @@ export interface ICommentBody {
 }
 
 export interface ICommentErrors {
-  body?: string[];
+  body?: string
 }
 
 export interface IReaction {

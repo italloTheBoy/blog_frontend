@@ -1,5 +1,6 @@
 import { TId } from "../types/appTypes";
 import {
+  IComment,
   ICommentBody,
   IPost,
   IPostBody,
@@ -13,7 +14,10 @@ export class TimelineAPI {
   }
 
   static async commentAnPost(postId: TId, body: ICommentBody) {
-    return await api.post(`/post/${postId}/comment`, body);
+    return await api.post<{ data: { id: TId } }>(
+      `/post/${postId}/comment`,
+      body
+    );
   }
 
   static async commentAnComment(commentId: TId, body: ICommentBody) {
@@ -26,6 +30,10 @@ export class TimelineAPI {
 
   static async getPost(id: TId) {
     return await api.get<{ data: { post: IPost } }>(`/post/${id}`);
+  }
+
+  static async getComment(id: TId) {
+    return await api.get<{ data: { comment: IComment } }>(`/comment/${id}`);
   }
 
   static async getReaction(id: TId) {
@@ -46,6 +54,12 @@ export class TimelineAPI {
 
   static async ListUserPosts(id: TId) {
     return await api.get(`/user/${id}/posts`);
+  }
+
+  static async ListPostComments(postId: TId) {
+    return await api.get<{ data: { comments: IComment[] } }>(
+      `/post/${postId}/comments`
+    );
   }
 
   static async toggleReactionType(id: TId) {

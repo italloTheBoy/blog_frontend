@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { PostOptionsNav } from "./PostOptionsNav";
 
 export function PostCard() {
-  console.log(1);
   const { post, postAuthor, loadPostAuthor } = usePost();
   const { user } = useAuth();
   const navigate = useNavigate();

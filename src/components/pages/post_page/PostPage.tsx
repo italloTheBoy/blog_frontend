@@ -10,18 +10,18 @@ import { CommentList } from "./CommentList";
 import { Card } from "react-bootstrap";
 
 export function PostPage() {
-  const { id } = useParams()
-  const [post, setPost] = useState<IPost | null>(null)
-  
-  const loadPost = async ()  => {
+  const { id } = useParams();
+  const [post, setPost] = useState<IPost | null>(null);
+
+  const loadPost = async () => {
     await TimelineAPI.getPost(id!).then((res) => {
-      setPost(res.data.data.post)
-    })
-  }
+      setPost(res.data.data.post);
+    });
+  };
 
   useEffect(() => {
-    loadPost()
-  }, [])
+    loadPost();
+  }, []);
 
   return post ? (
     <PostProvider postData={post!}>
@@ -30,16 +30,19 @@ export function PostPage() {
           <PostCard />
         </Card>
         <section className="mt-4">
-          <header className="border-bottom border-2">
+          <header className="border-bottom border-2 mb-4">
             <h1 className="fs-3">Comentários</h1>
           </header>
-          <CommentForm />
-          <CommentList />
+          <main className="border-bottom border-2 pb-4 mb-4">
+            <CommentForm />
+          </main>
+          <section>
+            <CommentList />
+          </section>
         </section>
       </div>
     </PostProvider>
   ) : (
     <NotFound />
   );
-
 }
