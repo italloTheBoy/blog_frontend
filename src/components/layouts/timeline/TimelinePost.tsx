@@ -11,7 +11,7 @@ import { IUser } from "../../../types/contexts/authTypes";
 import { Link } from "react-router-dom";
 
 export function TimelinePost() {
-  const { post } = usePost();
+  const { post, postMetrics, loadPostMetrics } = usePost();
   const { user: currentUser } = useAuth();
   const { loadPosts } = useTimeline();
   const [author, setAuthor] = useState<IUser | null>(null);
@@ -73,8 +73,18 @@ export function TimelinePost() {
         </Card.Body>
 
         <Card.Footer as="nav" className="border-0 pt-0">
-          <ReactionButton />
-          <CommentButton />
+          <ReactionButton
+            reactableType="post"
+            reactable={post}
+            metrics={postMetrics}
+            metricsLoader={loadPostMetrics}
+          />
+          <CommentButton
+            commentableType="post"
+            commentable={post}
+            metrics={postMetrics}
+            metricsLoader={loadPostMetrics}
+          />
           <Card.Link href={`/post/${post.id}`}>Veja mais...</Card.Link>
         </Card.Footer>
       </Card>

@@ -1,16 +1,15 @@
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
 import {
   ICommentErrors,
   ICommentParams,
-  IPostErrors,
 } from "../../../types/timelineTypes";
 import { Input } from "../../layouts/form/Input";
 import { usePost } from "../../../hooks/usePost";
 
 export function CommentForm() {
-  const { post } = usePost();
+  const { post, loadComments: reloadCommentList } = usePost();
   const [createData, setCreateData] = useState<ICommentParams>({});
   const [errs, setErrs] = useState<ICommentErrors>({});
 
@@ -23,7 +22,7 @@ export function CommentForm() {
       .then(() => {
         setCreateData({});
         setErrs({});
-        // reload comment list
+        reloadCommentList();
       })
       .catch((res) => setErrs(res.response.data.errors));
   };

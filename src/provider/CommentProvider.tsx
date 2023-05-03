@@ -15,11 +15,11 @@ export function CommentProvider({
 }: ICommentProvider) {
   const [comment, setComment] = useState<IComment | null>(null);
 
-  const [commentAuthor, setCommentsAuthor] = useState<IUser | undefined>(
+  const [author, setAuthor] = useState<IUser | undefined>(
     undefined
   );
 
-  const [commentMetrics, setCommentsMetrics] = useState<
+  const [metrics, setMetrics] = useState<
     ITimelineMetrics | undefined
   >(undefined);
 
@@ -41,14 +41,14 @@ export function CommentProvider({
     ? undefined
     : async () =>
         await AuthAPI.getUser(comment!.user_id).then((res) =>
-          setCommentsAuthor(res.data.data.user)
+          setAuthor(res.data.data.user)
         );
 
   const loadCommentMetrics = !loadMetrics || !comment
     ? undefined
     : async () =>
         await TimelineAPI.getCommentMetrics(comment!.id).then((res) =>
-          setCommentsMetrics(res.data.data)
+          setMetrics(res.data.data)
         );
 
   useEffect(() => {
@@ -64,11 +64,11 @@ export function CommentProvider({
     <CommentContext.Provider
       value={{
         comment,
-        commentAuthor,
-        commentMetrics,
+        author: author,
+        metrics: metrics,
         reloadComment: loadComment,
-        reloadCommentAuthor: loadCommentAuthor,
-        reloadCommentMetrics: loadCommentMetrics,
+        reloadAuthor: loadCommentAuthor,
+        reloadMetrics: loadCommentMetrics,
       }}
     >
       {children}

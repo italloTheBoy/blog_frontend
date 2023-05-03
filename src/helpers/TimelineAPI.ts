@@ -25,7 +25,11 @@ export class TimelineAPI {
   }
 
   static async reactPost(id: TId, body: IReactionBody) {
-    return await api.post(`/post/${id}/reaction`, body);
+    return await api.post<{ data: { id: TId } }>(`/post/${id}/reaction`, body);
+  }
+
+  static async reactComment(id: TId, body: IReactionBody) {
+    return await api.post(`/comment/${id}/reaction`, body);
   }
 
   static async getPost(id: TId) {
@@ -42,6 +46,10 @@ export class TimelineAPI {
 
   static async getReactionByPost(id: TId) {
     return await api.get(`/post/${id}/reaction`);
+  }
+
+  static async getReactionByCommment(id: TId) {
+    return await api.get(`/comment/${id}/reaction`);
   }
 
   static async getPostMetrics(id: TId) {
@@ -68,6 +76,10 @@ export class TimelineAPI {
 
   static async deletePost(id: TId) {
     return await api.delete(`/post/${id}`);
+  }
+
+  static async deleteComment(id: TId) {
+    return await api.delete(`/comment/${id}`);
   }
 
   static async deleteReaction(id: TId) {

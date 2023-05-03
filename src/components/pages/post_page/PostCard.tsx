@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { PostOptionsNav } from "./PostOptionsNav";
 
 export function PostCard() {
-  const { post, postAuthor, loadPostAuthor } = usePost();
+  const { post, postAuthor, loadPostAuthor, postMetrics, loadPostMetrics } =
+    usePost();
   const { user } = useAuth();
   const navigate = useNavigate();
   const isAuthor = user !== null && user?.id === postAuthor?.id;
@@ -38,7 +39,12 @@ export function PostCard() {
       </Card.Title>
       <Card.Text>{post!.body}</Card.Text>
       <nav>
-        <ReactionButton />
+        <ReactionButton
+          reactableType="post"
+          reactable={post!}
+          metrics={postMetrics}
+          metricsLoader={loadPostMetrics}
+        />
       </nav>
     </Card.Body>
   );

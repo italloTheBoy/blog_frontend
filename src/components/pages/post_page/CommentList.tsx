@@ -11,7 +11,7 @@ export function CommentList() {
     }, [])
 
     return (
-      <>
+      <div className="d-flex flex-column gap-4">
         {comments.length === 0 ? (
           <p>Não encontramos nemhum commentário</p>
         ) : (
@@ -21,6 +21,6 @@ export function CommentList() {
             </CommentProvider>
           ))
         )}
-      </>
+      </div>
     );
   }

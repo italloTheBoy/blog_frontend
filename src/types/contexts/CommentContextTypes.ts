@@ -5,11 +5,11 @@ import { TId } from "../appTypes";
 
 export interface ICommentContext {
   comment: IComment | null;
-  commentAuthor?: IUser;
-  commentMetrics?: ITimelineMetrics;
+  author?: IUser;
+  metrics?: ITimelineMetrics;
   reloadComment?: () => Promise<void>;
-  reloadCommentAuthor?: () => Promise<void>;
-  reloadCommentMetrics?: () => Promise<void>;
+  reloadAuthor?: () => Promise<void>;
+  reloadMetrics?: () => Promise<void>;
 }
 
 export interface ICommentProvider {

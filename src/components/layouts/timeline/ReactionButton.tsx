@@ -1,20 +1,41 @@
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import { IPostReaction, reactionType } from "../../../types/timelineTypes";
+import {
+  IComment,
+  IPost,
+  IPostReaction,
+  ITimelineMetrics,
+  reactionType,
+} from "../../../types/timelineTypes";
 import { TimelineAPI } from "../../../helpers/TimelineAPI";
-import { usePost } from "../../../hooks/usePost";
 
-export function ReactionButton() {
-  const { post, postMetrics, loadPostMetrics } = usePost();
+interface ReactionButtonProps {
+  reactable: IPost | IComment;
+  reactableType: "post" | "comment";
+  metrics: ITimelineMetrics | null;
+  metricsLoader(): Promise<void>;
+}
 
+export function ReactionButton({
+  reactableType,
+  reactable,
+  metrics,
+  metricsLoader,
+}: ReactionButtonProps) {
   const [reaction, setReaction] = useState<IPostReaction | undefined>(
     undefined
   );
 
   const loadReaction = async () => {
-    await TimelineAPI.getReactionByPost(post!.id).then((res) =>
-      setReaction(res.data.data.reaction)
-    );
+    if (reactableType === "post")
+      await TimelineAPI.getReactionByPost(reactable!.id).then((res) =>
+        setReaction(res.data.data.reaction)
+      );
+
+    if (reactableType === "comment")
+      await TimelineAPI.getReactionByCommment(reactable!.id).then((res) =>
+        setReaction(res.data.data.reaction)
+      );
   };
 
   const createReaction = async (type: reactionType) => {
@@ -22,9 +43,15 @@ export function ReactionButton() {
       reaction: { type },
     };
 
-    await TimelineAPI.reactPost(post!.id, body)
-      .then((res) => TimelineAPI.getReaction(res.data.data.id))
-      .then((res) => setReaction(res.data.data.reaction));
+    if (reactableType === "post")
+      await TimelineAPI.reactPost(reactable!.id, body)
+        .then((res) => TimelineAPI.getReaction(res.data.data.id))
+        .then((res) => setReaction(res.data.data.reaction));
+
+    if (reactableType === "comment")
+      await TimelineAPI.reactComment(reactable!.id, body)
+        .then((res) => TimelineAPI.getReaction(res.data.data.id))
+        .then((res) => setReaction(res.data.data.reaction));
   };
 
   const updateReaction = async () => {
@@ -66,7 +93,7 @@ export function ReactionButton() {
   }, []);
 
   useEffect(() => {
-    loadPostMetrics();
+    metricsLoader();
   }, [reaction]);
 
   return (
@@ -75,14 +102,14 @@ export function ReactionButton() {
         className="text-decoration-none text-primary fs-5"
         onClick={handleLike}
       >
-        <i className={likeBtnClass}>{postMetrics?.likes}</i>
+        <i className={likeBtnClass}>{metrics?.likes}</i>
       </Card.Link>
 
       <Card.Link
         className="text-decoration-none text-danger fs-5"
         onClick={handleDislike}
       >
-        <i className={dislikeBtnClass}>{postMetrics?.dislikes}</i>
+        <i className={dislikeBtnClass}>{metrics?.dislikes}</i>
       </Card.Link>
     </>
   );
